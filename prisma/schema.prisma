@@ -11,4 +11,11 @@ generator client {
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
+}  
+
+model apiTable{
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(100)
+  link String @db.VarChar(500)
+  key String @db.VarChar(250)
 }
