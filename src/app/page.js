@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 
 // BACKEND JAVASCRIPT CODE
 
-
+const prisma = new PrismaClient();
 
 // FRONTEND RENDERING CODE
 export default function Home() {
