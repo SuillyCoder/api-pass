@@ -9,7 +9,7 @@ export default function Home() {
       try {
         const res = await fetch('/api/data'); // Fetch from your API route
         if (!res.ok) {
-          throw Error(`HTTP error! status: ${res.status}`);
+          throw new Error(`HTTP error! status: ${res.status}`);
         }
         const apiData = await res.json();
         setData(apiData);
