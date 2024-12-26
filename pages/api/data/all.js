@@ -13,7 +13,23 @@ export default async function handler(req, res) {
     } finally {
       await prisma.$disconnect();
     }
+  }else if (req.method === 'POST') {
+    try {
+      const { name, link, key } = req.body;
+      const apiData = await prisma.apiTable.create({
+        data: {
+          name,
+          link,
+          key,
+        },
+      });
+      res.status(200).json(apiData);
+    } catch (error) {
+      console.error("Error creating data:", error);
+      res.status(500).json({ message: "Failed to create data" });
+    }
   } else {
     res.status(405).json({ message: "Method not allowed" });
   }
+  
 }
