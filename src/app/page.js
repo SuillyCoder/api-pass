@@ -48,11 +48,11 @@ export default function Home() {
     }
   }
 
-  function EditData({ id }) {
+  function EditData({ id = '' }) {
     return (
-        <Link href="/update"> {/* Navigate to /about */}
-          <button>Edit</button>
-        </Link>
+      <Link href={`/update?id=${id}`}> {/* Pass ID as query parameter */}
+        <button>Edit</button>
+      </Link>
     );
   }
   function AddData() {

@@ -1,11 +1,29 @@
 "use client";
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+
 import Link from 'next/link';
 export default function Update() {
+  const router = useRouter();
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
   const [key, setKey] = useState('');
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const id = router.query?.id; // Use optional chaining
   
+    if (id) {
+      fetch(`/api/data/${id}`) // Modify URL to fetch specific data using ID
+        .then(res => res.json())
+        .then(fetchedData => {
+            console.log("Fetched data:", fetchedData); // Log fetched data
+            setData(fetchedData);
+          })
+        .catch(error => console.error("Error fetching data:", error));
+    }
+  }, [router.query]); // Re-run effect when query changes
+
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission
 
@@ -51,6 +69,7 @@ export default function Update() {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <h1 className="text-4xl">API KEY MANAGER 2</h1>
+      {data && ( 
       <form onSubmit={handleSubmit}> {/* Use a form element */}
         <div>
           <div>
@@ -59,7 +78,7 @@ export default function Update() {
               className="text-center text-black"
               type="text"
               placeholder="Enter API Name..."
-              value={name}
+              defaultValue={data.name}
               onChange={(e) => setName(e.target.value)}
             />
           </div>
@@ -69,7 +88,7 @@ export default function Update() {
               className="text-center text-black"
               type="text"
               placeholder="Insert API Link..."
-              value={link}
+              defaultValue={data.link}
               onChange={(e) => setLink(e.target.value)}
             />
           </div>
@@ -79,16 +98,17 @@ export default function Update() {
               className="text-center text-black"
               type="text"
               placeholder="Insert API Key..."
-              value={key}
+              defaultValue={data.key}
               onChange={(e) => setKey(e.target.value)}
             />
           </div>
           <div>
-            <button type="submit">CONFIRM</button> {/* Submit button */}
+            <button type="submit">UPDATE</button> {/* Submit button */}
             <Cancel />
           </div>
         </div>
       </form>
+    )}
     </div>
   );
 }
