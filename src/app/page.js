@@ -26,8 +26,24 @@ export default function Home() {
     navigator.clipboard.writeText(text);
   }
 
-  function deleteData(id) {
-    // Implement delete logic here
+  async function deleteData(id) {
+    try {
+      const res = await fetch(`/api/data/${id}`, { // Use template literals for URL
+        method: 'DELETE',
+      });
+  
+      if (!res.ok) {
+          const errorData = await res.json();
+          throw new Error(`HTTP error ${res.status}: ${errorData?.message || res.statusText}`);
+      }
+  
+      // Update the UI after successful deletion (important!)
+      setData(data.filter(item => item.id !== id));
+    } catch (error) {
+      console.error("Error deleting data:", error);
+      // Handle the error, e.g., show an error message to the user
+      alert("Error deleting data. Please try again."); // Simple example
+    }
   }
 
   function editData(id) {
@@ -51,7 +67,7 @@ export default function Home() {
           <div className="border-blue-500 border-solid border-2 w-4/12 flex space-x-7">
             <button onClick={() => copyToClipboard(item.key)}>Copy Key</button>
             <button>Edit</button>
-            <button>Delete</button>
+            <button onClick={() => deleteData(item.id)}>Delete</button>
           </div>
         </div>
       ))}
