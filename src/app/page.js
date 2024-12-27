@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 export default function Home() {
   const [data, setData] = useState([]);
@@ -24,6 +24,7 @@ export default function Home() {
 
   function copyToClipboard(text) {
     navigator.clipboard.writeText(text);
+    alert("API Key successfully copied!");
   }
 
   async function deleteData(id) {
@@ -39,6 +40,7 @@ export default function Home() {
   
       // Update the UI after successful deletion (important!)
       setData(data.filter(item => item.id !== id));
+      alert("Entry deleted successfully!");
     } catch (error) {
       console.error("Error deleting data:", error);
       // Handle the error, e.g., show an error message to the user
@@ -46,14 +48,26 @@ export default function Home() {
     }
   }
 
-  function editData(id) {
-    // Implement edit logic here
+  function EditData({ id }) {
+    return (
+        <Link href="/update"> {/* Navigate to /about */}
+          <button>Edit</button>
+        </Link>
+    );
   }
-
+  function AddData() {
+    return (
+      <div>
+        <Link href="/entry"> {/* Navigate to /about */}
+          <button>Add New API Key</button>
+        </Link>
+      </div>
+    );
+  }
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <h1 className="text-4xl">API KEY MANAGER</h1>
-      <button>Add New API Key</button>
+      <AddData />
       {/* Render Data Here */}
       {data.map((item) => (
         <div
@@ -66,7 +80,7 @@ export default function Home() {
           </div>
           <div className="border-blue-500 border-solid border-2 w-4/12 flex space-x-7">
             <button onClick={() => copyToClipboard(item.key)}>Copy Key</button>
-            <button>Edit</button>
+           <EditData />
             <button onClick={() => deleteData(item.id)}>Delete</button>
           </div>
         </div>

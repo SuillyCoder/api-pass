@@ -22,43 +22,6 @@ export default async function reqHandler(req, res) {
         await prisma.$disconnect();
       }
   } 
-  //CREATE OPERATION
-  else if (req.method === 'POST') {
-    try {
-      const { name, link, key } = req.body;
-      const apiData = await prisma.apiTable.create({
-        data: {
-          name,
-          link,
-          key,
-        },
-      });
-      res.status(200).json(apiData);
-    } catch (error) {
-      console.error("Error creating data:", error);
-      res.status(500).json({ message: "Failed to create data" });
-    }
-  }
-  //UPDATE OPERATION
-  else if (req.method === 'PUT'){
-    try {
-      const { name, link, key } = req.body;
-      const apiData = await prisma.apiTable.update({
-        where: { id: parseInt(id) },
-        data: {
-          name,
-          link,
-          key,
-        },
-      });
-      res.status(200).json(apiData);
-    } catch (error) {
-      console.error("Error creating data:", error);
-      res.status(500).json({ message: "Failed to create data" });
-    }finally {
-      await prisma.$disconnect();
-    }
-  }
   //DELETE OPERATION
   else if (req.method === 'DELETE'){
     try {
