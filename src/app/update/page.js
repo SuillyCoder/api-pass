@@ -1,62 +1,76 @@
 "use client";
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 import Link from 'next/link';
 export default function Update() {
-  const router = useRouter();
-  const [name, setName] = useState('');
-  const [link, setLink] = useState('');
-  const [key, setKey] = useState('');
-  const [data, setData] = useState([]);
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
+  const [name, setName] = useState(''); // Initialize with an empty string
+  const [link, setLink] = useState(''); // Initialize with an empty string
+  const [key, setKey] = useState(''); 
+  const [data] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const id = router.query?.id; // Use optional chaining
-  
-    if (id) {
-      fetch(`/api/data/${id}`) // Modify URL to fetch specific data using ID
-        .then(res => res.json())
-        .then(fetchedData => {
-            console.log("Fetched data:", fetchedData); // Log fetched data
-            setData(fetchedData);
-          })
-        .catch(error => console.error("Error fetching data:", error));
+    if (!id) {
+      console.error("No ID provided in the query parameter.");
+      setLoading(false);
+      return;
     }
-  }, [router.query]); // Re-run effect when query changes
+
+    // Fetch specific data by ID
+    fetch(`/api/data/${id}`)
+      .then((res) => res.json())
+      .then((fetchedData) => {
+        setName(fetchedData.name);
+        console.log("Name: ", fetchedData.name);
+        setLink(fetchedData.link);
+        console.log("Link: ", fetchedData.link);
+        setKey(fetchedData.key);
+        console.log("Key: ", fetchedData.key);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      });
+  }, [id]);
+
+  if (loading) return <p>Loading...</p>;
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission
-
+  
     if (!name || !link || !key) {
       alert("All fields (Name, Link, Key) are required.");
       return; // Stop execution if any field is empty
     }
-
+  
     try {
-      const res = await fetch('/api/data/all', {
-        method: 'POST',
+      // Make sure to include the `id` in the API endpoint
+      const res = await fetch(`/api/data/${id}`, { // Use the specific endpoint with the id
+        method: 'PUT', // Change method to PUT for updating
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, link, key }),
+        body: JSON.stringify({ name, link, key }), // Include the updated data
       });
-
+  
       if (!res.ok) {
         const errorData = await res.json();
         throw new Error(`HTTP error ${res.status}: ${errorData?.message || res.statusText}`);
       }
-
-      // Handle successful data addition (e.g., redirect, show a success message)
-      alert("Data added successfully!");
-      //Clear the input fields
-      setName("");
-      setLink("");
-      setKey("");
+  
+      // Handle successful update
+      alert("Data updated successfully!");
+      router.push("/"); // Redirect to the homepage or wherever appropriate
     } catch (error) {
-      console.error("Error adding data:", error);
-      alert("Error adding data. Please try again.");
+      console.error("Error updating data:", error);
+      alert("Error updating data. Please try again.");
     }
   };
+  
   function Cancel() {
     return (
         <Link href="../"> {/* Navigate to /about */}
@@ -78,7 +92,7 @@ export default function Update() {
               className="text-center text-black"
               type="text"
               placeholder="Enter API Name..."
-              defaultValue={data.name}
+              value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </div>
@@ -88,7 +102,7 @@ export default function Update() {
               className="text-center text-black"
               type="text"
               placeholder="Insert API Link..."
-              defaultValue={data.link}
+              value={link}
               onChange={(e) => setLink(e.target.value)}
             />
           </div>
@@ -98,7 +112,7 @@ export default function Update() {
               className="text-center text-black"
               type="text"
               placeholder="Insert API Key..."
-              defaultValue={data.key}
+              value={key}
               onChange={(e) => setKey(e.target.value)}
             />
           </div>

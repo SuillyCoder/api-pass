@@ -22,6 +22,8 @@ export default function Home() {
     fetchData();
   }, []);
 
+  console.log("Rendered data:", data); 
+  
   function copyToClipboard(text) {
     navigator.clipboard.writeText(text);
     alert("API Key successfully copied!");
@@ -48,7 +50,7 @@ export default function Home() {
     }
   }
 
-  function EditData({ id = '' }) {
+  function EditData({ id }) {
     return (
       <Link href={`/update?id=${id}`}> {/* Pass ID as query parameter */}
         <button>Edit</button>
@@ -80,7 +82,7 @@ export default function Home() {
           </div>
           <div className="border-blue-500 border-solid border-2 w-4/12 flex space-x-7">
             <button onClick={() => copyToClipboard(item.key)}>Copy Key</button>
-           <EditData />
+           <EditData id={item.id}/>
             <button onClick={() => deleteData(item.id)}>Delete</button>
           </div>
         </div>
