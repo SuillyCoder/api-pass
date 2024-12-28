@@ -11,6 +11,10 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily:{
+        'teko': ['Teko', 'sans-serif'],
+        'redHat': ['Red Hat Display', 'sans-serif'],
+      }
     },
   },
   plugins: [],

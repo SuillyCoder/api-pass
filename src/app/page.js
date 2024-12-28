@@ -51,7 +51,7 @@ export default function Home() {
   function EditData({ id }) {
     return (
       <Link href={`/update?id=${id}`}> {/* Pass ID as query parameter */}
-        <button className = "bg-blue-800 p-2 rounded-md">Edit</button>
+        <button className = "bg-blue-800 p-2 rounded-md font-redHat font-semibold">Edit</button>
       </Link>
     );
   }
@@ -59,29 +59,29 @@ export default function Home() {
     return (
       <div>
         <Link href="/entry"> {/* Navigate to /about */}
-          <button className = "bg-blue-800 p-3 rounded-md">Add New API Key</button>
+          <button className = "bg-blue-800 p-3 rounded-md font-redHat font-semibold">Add New API Key</button>
         </Link>
       </div>
     );
   }
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <h1 className="text-4xl">API KEY MANAGER</h1>
+      <h1 className="text-6xl font-teko font-semibold">API KEY MANAGER</h1>
       <AddData />
       {/* Render Data Here */}
       {data.map((item) => (
         <div
-          className="flex items-center justify-center border-yellow-500 w-5/6 border-solid border-2"
+          className="flex items-center justify-center w-5/6 bg-blue-400 space-x-10 rounded-md p-3"
           key={item.id}
         >
-          <div className="border-red-500 border-solid border-2 w-6/12">
+          <div className=" w-6/12 p-4 bg-blue-600 rounded-lg font-redHat font-normal">
             <p>Name: {item.name}</p>
             <p>Link: {item.link}</p>
           </div>
-          <div className="border-blue-500 border-solid border-2 w-4/12 flex space-x-7">
-            <button className = "bg-blue-800 p-1 rounded-md text-white" onClick={() => copyToClipboard(item.key)}>Copy Key</button>
+          <div className=" w-4/12 flex space-x-7">
+            <button className = "bg-blue-800 p-1 rounded-md text-white font-redHat font-semibold" onClick={() => copyToClipboard(item.key)}>Copy Key</button>
            <EditData id={item.id}/>
-            <button className = "bg-blue-800 p-1 rounded-md text-white" onClick={() => deleteData(item.id)}>Delete</button>
+            <button className = "bg-blue-800 p-1 rounded-md text-white font-redHat font-semibold" onClick={() => deleteData(item.id)}>Delete</button>
           </div>
         </div>
       ))}

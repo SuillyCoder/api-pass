@@ -42,7 +42,7 @@ export default function Entry() {
   function Cancel() {
     return (
         <Link href="../"> {/* Navigate to /about */}
-          <button>CANCEL</button>
+          <button className = "bg-blue-800 p-1 rounded-md text-white font-redHat font-semibold" >CANCEL</button>
         </Link>
     );
   }
@@ -50,11 +50,11 @@ export default function Entry() {
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <h1 className="text-4xl">API KEY MANAGER 1</h1>
+      <h1 className="text-6xl font-teko font-semibold">API KEY MANAGER</h1>
       <form onSubmit={handleSubmit}> {/* Use a form element */}
         <div>
           <div>
-            <h2 className="text-center">NAME</h2>
+            <h2 className="text-center font-redHat font-semibold">NAME</h2>
             <input
               className="text-center text-black"
               type="text"
@@ -63,8 +63,8 @@ export default function Entry() {
               onChange={(e) => setName(e.target.value)}
             />
           </div>
-          <div>
-            <h2 className="text-center">LINK</h2>
+          <div className = "mt-3">
+            <h2 className="text-center font-redHat font-semibold">LINK</h2>
             <input
               className="text-center text-black"
               type="text"
@@ -73,8 +73,8 @@ export default function Entry() {
               onChange={(e) => setLink(e.target.value)}
             />
           </div>
-          <div>
-            <h2 className="text-center">KEY</h2>
+          <div className = "mt-3">
+            <h2 className="text-center font-redHat font-semibold">KEY</h2>
             <input
               className="text-center text-black"
               type="text"
@@ -83,8 +83,8 @@ export default function Entry() {
               onChange={(e) => setKey(e.target.value)}
             />
           </div>
-          <div className="border-red-500 border-solid border-2 flex justify-center">
-            <button type="submit">CONFIRM</button> {/* Submit button */}
+          <div className="flex justify-center mt-5 space-x-2">
+            <button className = "bg-blue-800 p-1 rounded-md text-white font-redHat font-semibold"  type="submit">CONFIRM</button> {/* Submit button */}
             <Cancel />
           </div>
         </div>
