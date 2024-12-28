@@ -64,7 +64,6 @@ export default function Update() {
   
       // Handle successful update
       alert("Data updated successfully!");
-      router.push("/"); // Redirect to the homepage or wherever appropriate
     } catch (error) {
       console.error("Error updating data:", error);
       alert("Error updating data. Please try again.");

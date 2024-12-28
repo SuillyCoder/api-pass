@@ -36,6 +36,23 @@ export default async function reqHandler(req, res) {
       await prisma.$disconnect();
     }
   }
+  else if (req.method === 'PUT') {
+    try {
+      const { name, link, key } = req.body;
+      const apiData = await prisma.apiTable.update({
+        where: { id: parseInt(id) },
+        data: {
+          name,
+          link,
+          key,
+        },
+      });
+      res.status(200).json(apiData);
+    } catch (error) {
+      console.error("Error creating data:", error);
+      res.status(500).json({ message: "Failed to create data" });
+    }
+  }
   //ANYTHING ELSE
   else {
     res.status(405).json({ message: "Invalid Method" });
