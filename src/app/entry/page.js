@@ -83,7 +83,7 @@ export default function Entry() {
               onChange={(e) => setKey(e.target.value)}
             />
           </div>
-          <div>
+          <div className="border-red-500 border-solid border-2 flex justify-center">
             <button type="submit">CONFIRM</button> {/* Submit button */}
             <Cancel />
           </div>

@@ -115,7 +115,7 @@ export default function Update() {
               onChange={(e) => setKey(e.target.value)}
             />
           </div>
-          <div>
+          <div className="border-red-500 border-solid border-2 flex justify-center">
             <button type="submit">UPDATE</button> {/* Submit button */}
             <Cancel />
           </div>

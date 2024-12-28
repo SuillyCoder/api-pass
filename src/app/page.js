@@ -22,8 +22,6 @@ export default function Home() {
     fetchData();
   }, []);
 
-  console.log("Rendered data:", data); 
-  
   function copyToClipboard(text) {
     navigator.clipboard.writeText(text);
     alert("API Key successfully copied!");
@@ -53,7 +51,7 @@ export default function Home() {
   function EditData({ id }) {
     return (
       <Link href={`/update?id=${id}`}> {/* Pass ID as query parameter */}
-        <button>Edit</button>
+        <button className = "bg-blue-800 p-2 rounded-md">Edit</button>
       </Link>
     );
   }
@@ -61,7 +59,7 @@ export default function Home() {
     return (
       <div>
         <Link href="/entry"> {/* Navigate to /about */}
-          <button>Add New API Key</button>
+          <button className = "bg-blue-800 p-3 rounded-md">Add New API Key</button>
         </Link>
       </div>
     );
@@ -81,9 +79,9 @@ export default function Home() {
             <p>Link: {item.link}</p>
           </div>
           <div className="border-blue-500 border-solid border-2 w-4/12 flex space-x-7">
-            <button onClick={() => copyToClipboard(item.key)}>Copy Key</button>
+            <button className = "bg-blue-800 p-1 rounded-md text-white" onClick={() => copyToClipboard(item.key)}>Copy Key</button>
            <EditData id={item.id}/>
-            <button onClick={() => deleteData(item.id)}>Delete</button>
+            <button className = "bg-blue-800 p-1 rounded-md text-white" onClick={() => deleteData(item.id)}>Delete</button>
           </div>
         </div>
       ))}
